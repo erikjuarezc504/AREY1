@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro Médico Todo-en-Uno</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            border-bottom: 4px solid #0056b3;
+        }
+        main {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 2rem;
+        }
+        section {
+            margin-bottom: 2rem;
+        }
+        h2 {
+            color: #007bff;
+            margin-bottom: 1rem;
+        }
+        .especialidades {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .card {
+            background: #f1f1f1;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        form input, form select, form textarea, form button {
+            width: 100%;
+            padding: 0.6rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        form button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Centro Médico Vida Saludable</h1>
+</header>
+
+<main>
+    <section>
+        <h2>Información Institucional</h2>
+        <p>En el Centro Médico Vida Saludable, ofrecemos atención de calidad con especialistas altamente capacitados. Nos comprometemos con tu bienestar y salud, brindando un servicio cálido y profesional.</p>
+    </section>
+
+    <section>
+        <h2>Especialidades Médicas</h2>
+        <div class="especialidades">
+            <div class="card">
+                <h3>Medicina General</h3>
+                <p>Consulta integral para el cuidado de tu salud general.</p>
+            </div>
+            <div class="card">
+                <h3>Pediatría</h3>
+                <p>Atención especializada para bebés, niños y adolescentes.</p>
+            </div>
+            <div class="card">
+                <h3>Ginecología</h3>
+                <p>Salud femenina, planificación familiar y revisiones periódicas.</p>
+            </div>
+            <div class="card">
+                <h3>Dermatología</h3>
+                <p>Cuidado de la piel, tratamientos y procedimientos dermatológicos.</p>
+            </div>
+            <div class="card">
+                <h3>Cardiología</h3>
+                <p>Prevención, diagnóstico y tratamiento de enfermedades del corazón.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Agendar Cita</h2>
+        <form id="citaForm">
+            <input type="text" id="nombre" name="nombre" placeholder="Nombre completo" required>
+            <input type="email" id="email" name="email" placeholder="Correo electrónico" required>
+            <input type="tel" id="telefono" name="telefono" placeholder="Teléfono" required>
+            <select id="especialidad" name="especialidad" required>
+                <option value="">Selecciona especialidad</option>
+                <option value="Medicina General">Medicina General</option>
+                <option value="Pediatría">Pediatría</option>
+                <option value="Ginecología">Ginecología</option>
+                <option value="Dermatología">Dermatología</option>
+                <option value="Cardiología">Cardiología</option>
+            </select>
+            <input type="date" id="fecha" name="fecha" required>
+            <textarea id="mensaje" name="mensaje" placeholder="Comentarios adicionales (opcional)"></textarea>
+            <button type="submit">Enviar cita</button>
+        </form>
+        <div id="respuesta" style="margin-top:1rem;"></div>
+    </section>
+</main>
+
+<footer>
+    &copy; 2025 Centro Médico Vida Saludable
+</footer>
+
+<script>
+document.getElementById('citaForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = new FormData(form);
+    const jsonData = {};
+    data.forEach((value, key) => jsonData[key] = value);
+
+    // Reemplaza esta URL con la de tu Google Apps Script publicado
+    const googleScriptURL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+
+    fetch(googleScriptURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: new URLSearchParams(jsonData)
+    })
+    .then(() => {
+        document.getElementById('respuesta').innerText = '✅ ¡Cita enviada exitosamente!';
+        form.reset();
+    })
+    .catch(() => {
+        document.getElementById('respuesta').innerText = '❌ Hubo un error al enviar la cita.';
+    });
+});
+</script>
+
+</body>
+</html>
